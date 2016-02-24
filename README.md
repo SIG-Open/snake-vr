@@ -1,3 +1,3 @@
-# hackillinois-uic-vr
+# SnakeVR
 
-VR data visualization using node.js server with the google cardboard. 
+New template for SnakeVR Game.  Includes node.js and jQuery.

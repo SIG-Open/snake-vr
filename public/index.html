@@ -97,18 +97,55 @@ WebVRConfig = {
 <script src="lib/jquery-2.2.0.min.js"></script>
 
 <script>
-
+        //function declarations
+        function Create2DArray(rows){
+            var arr = [];
+            for (var i =0; i< rows; i++) {
+                arr[i] = [];
+            }
+            return arr;
+        }
+        
+        function createCube(width, height, length, x, y, z){
+            var geometry0 = new THREE.BoxGeometry(width, height, length);
+            var material0 = new THREE.MeshNormalMaterial();
+            var cube0 = new THREE.Mesh(geometry0, material0);
+    
+            cube0.position.x = x;
+            cube0.position.y = +height/2 -0.5;
+            cube0.position.z = z;
+    
+            return cube0;
+        }
 
 	$(function(){
 
        console.log(1);
 	   var test_string = 'test string'; 
 	   exampleFunction(test_string); 
+       
+
+       //2D array with 10 rows
+       var grid = Create2DArray(10);
+       //populate arrays with 'o'
+       for (var i = 0; i < 10; i++){
+           for (var j = 0; j < 10; j++){
+                grid[i][j] = 'o';
+           }
+       }
+      
+      for (var i = 0; i < 10; i++){
+           for (var j = 0; j < 10; j++){
+               // console.log(grid[i][j]);
+           }
+           console.log("New Row");
+       }
                 
          /*first graphs*/
         var fraction1 = 30000;
         var heightArr1 = [ 37950,17656,13551,34896,45469,36462,50,50,50,50,50];
-        //function createCube(width, height, length, x, y, z)
+       
+        //cube that moves  
         var cube1 = new createCube(0.05, 0.1,0.1, 0, 0, -2);
 
         for (var i = 0; i < heightArr1.length; i++){
@@ -245,17 +282,7 @@ WebVRConfig = {
     };
     var manager = new WebVRManager(renderer, effect, params);
 
-    function createCube(width, height, length, x, y, z){
-        var geometry0 = new THREE.BoxGeometry(width, height, length);
-        var material0 = new THREE.MeshNormalMaterial();
-        var cube0 = new THREE.Mesh(geometry0, material0);
-    
-        cube0.position.x = x;
-        cube0.position.y = +height/2 -0.5;
-        cube0.position.z = z;
-    
-        return cube0;
-    }
+
 
 
     // Reset the position sensor when 'z' pressed.

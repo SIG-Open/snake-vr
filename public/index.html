@@ -209,7 +209,12 @@ WebVRConfig = {
             console.log("second" + second);
             
 //          console.log(grid[0][second]);
-            changeCubeColor(grid[0][1], 0xFF0000);
+            for (i = 0; i < 10; i++){
+                console.log("GREATER THAN 5");
+                changeCubeColor(grid[0][i], 0xFF0000);
+//            scene.add(grid[0][delta]);
+            }
+
 
             var i;
 
@@ -237,7 +242,7 @@ WebVRConfig = {
             manager.render(scene, camera, timestamp);
 
             requestAnimationFrame(animate);
-       }
+       }//end of animation function
 
        // Kick off animation loop
        animate(performance ? performance.now() : Date.now());    

@@ -185,7 +185,11 @@ WebVRConfig = {
             var geometry0 = new THREE.BoxGeometry(width, height, length);
             for ( var i = 0; i < geometry0.faces.length; i += 2 ) {
 
-			    var hex = Math.random() * 0xffffff;
+//			    var hex = Math.random() * 0xD0D0D0;
+                var value = Math.random() * 0xFF | 0;
+                var grayscale = (value << 16) | (value << 8) | value;
+                var hex = '0x' + grayscale.toString(16);
+//                var hex = 0xD5D5D5;
 				geometry0.faces[ i ].color.setHex( hex );
 				geometry0.faces[ i + 1 ].color.setHex( hex );
 
@@ -221,9 +225,10 @@ WebVRConfig = {
                
            }
        }
-      console.log(grid[0][0].geometry.faces);
-      changeCubeColor(grid[0][0], 0x00FF00);
-      changeCubeColor(grid[0][1], 0x00FF00);
+//      console.log(grid[0][0].geometry.faces);
+//      changeCubeColor(grid[0][0], 0x00FF00);
+//      console.log("cube green");
+//      changeCubeColor(grid[0][1], 0x00FF00);
       
        /*first graph: front of the viewer*/
         var graphHeight1 = [ 1,6,1,6,9,2,5,7,8,3,9];
@@ -272,31 +277,39 @@ WebVRConfig = {
         // Request animation frame loop function
         var lastRender = 0;
         function animate(timestamp) {
+            if (timestamp){
+                console.log("timestamp: " + timestamp);
+           }
             var delta = Math.min(timestamp - lastRender, 500);
+            console.log("delta: " + delta);
+            console.log("last Render: " + lastRender);
             lastRender = timestamp;
 
             var second = Math.floor(lastRender/500);
-            console.log("delta" +delta);
-            console.log("second" + second);
-            
-            console.log(second);
+ //           console.log("delta" +delta);
+ //           console.log("second" + second);
+ //           console.log(second);
             for (var i = 0; i < 10; i++){
-                console.log("GREATER THAN 5");
-                changeCubeColor(grid[0][i], 0xFF0000);
-//                scene.add(grid[0][i]);
+  //              console.log("GREATER THAN 5");
+  //              changeCubeColor(grid[0][i], 0xFF0000);
+  //              scene.add(grid[0][i]);
             }
             
             var i;
+            
+             changeCubeColor(grid[0][0], 0x00FF00);
+//             console.log("cube green");
 
-            for (var i = 0; i< graphHeight1.length; i++){
+//            for (var i = 0; i< graphHeight1.length; i++){
                 // Apply rotation to cube mesh
-                graph1[i].rotation.y += delta * 0.0006;
-                graph1[i].position.x -= .002;
-            }
+//                graph1[i].rotation.y += delta * 0.0006;
+//                graph1[i].position.x -= .002;
+//            }
         
             for (var i = 0; i< 11; i++){
                  // Apply rotation to cube mesh
                  graph2[i].rotation.y += delta * 0.0006;
+//                 console.log("rotation");
             }
 
             for (var i = 0; i < 11; i++) {

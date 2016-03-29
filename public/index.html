@@ -185,11 +185,11 @@ WebVRConfig = {
             var geometry0 = new THREE.BoxGeometry(width, height, length);
             for ( var i = 0; i < geometry0.faces.length; i += 2 ) {
 
-//			    var hex = Math.random() * 0xD0D0D0;
+                // var hex = Math.random() * 0xD0D0D0;
                 var value = Math.random() * 0xFF | 0;
                 var grayscale = (value << 16) | (value << 8) | value;
                 var hex = '0x' + grayscale.toString(16);
-//                var hex = 0xD5D5D5;
+                //var hex = 0xD5D5D5;
 				geometry0.faces[ i ].color.setHex( hex );
 				geometry0.faces[ i + 1 ].color.setHex( hex );
 
@@ -206,7 +206,16 @@ WebVRConfig = {
             return cube0;
         }
         
-         
+        //
+//        var moveForward()
+//        var moveBack()
+ //       var eat()
+//        var grow()
+        
+//        moveForward()
+//        if (snake.eat() == true){
+//               snake.grow();
+//        }
         
         
     var grid = create2DArray(10);

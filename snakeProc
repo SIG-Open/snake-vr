@@ -1,0 +1,102 @@
+ ArrayList < Integer > x =new ArrayList< Integer> (), y = new ArrayList <Integer>();
+ int w = 30; 
+ int h =30;
+ int a= 20;
+ int direction =2;
+ int applex =12;
+ int appley = 10;
+ int[] dx ={0,0,1,-1}, dy ={1,-1,0,0};
+ boolean gameOver;
+ int score = 0;
+ int highScore=0;
+ int newHigh = 0;
+ 
+void setup(){
+  size(600, 600);
+  x.add(5);
+  y.add(5);
+}
+
+void draw(){
+  background(225);
+  for (int i =0; i< x.size(); i++){
+    fill(0,255,0);
+    rect(x.get(i)*a, y.get(i)*a, a, a);
+    }
+    if(!gameOver){
+    fill(255, 0,0);
+    textAlign(LEFT);
+    textSize(20);
+    text("SCORE "+score, 10,30);
+    textSize(10);
+    text("HIGHSCORE "+ highScore, 10,10);
+    rect(applex *a, appley*a ,a,a);
+if (frameCount%5 ==0){
+  x.add(0,x.get(0) + dx[direction]);
+  y.add(0,y.get(0) + dy[direction]);
+  for (int i = 1; i< x.size(); i++){
+    if (x.get(0) == x.get(i) && y.get(0) == y.get(i)){
+      gameOver = true;
+      if(highScore < score){
+       highScore = score;
+       newHigh =1;
+      }
+    }
+  }
+  if ( x.get(0) < 0 || y.get(0) < 0 || x.get(0) >= w ||y.get(0) >= h) {
+    gameOver = true;
+          if(highScore < score){
+       highScore = score;
+       newHigh =1;
+      }
+}
+  if (x.get(0) ==applex && y.get (0) ==appley){
+    applex = (int)random(0,w);
+    appley = (int)random(0, h);
+    score++;
+  }
+  else{
+  x.remove(x.size()-1);
+  y.remove(y.size()-1);
+  }
+}
+    }
+else{
+  fill(0);
+  textSize (30);
+  textAlign(CENTER);  
+  text("GAME OVER!", width/2 , height/2 );
+  //textSize(10);
+ // text("SCORE: " +score + "highScore: " + highScore, 70, 50);
+  if (newHigh==0) {
+    
+    textAlign(CENTER);
+    text("YOUR SCORE: " + score, width/2, height/2 + 100);
+  }
+  else {
+     //highScore = score;
+     textAlign(CENTER);
+    text("NEW HIGH SCORE: " + highScore , width/2, height/2 +100);
+  }
+  
+  textSize(20);
+  textAlign(CENTER);
+  text("Press space to play again!", width/2, height/2 +200);
+  if (keyPressed && key ==' '){
+    x.clear();
+    y.clear();
+    x.add(5);
+    y.add(5);
+    gameOver =false;
+    score = 0;
+    newHigh = 0;
+}
+}
+    }
+void keyPressed(){
+  if(key == CODED){
+  int newdir =  keyCode==DOWN ? 0:(keyCode ==UP ? 1 :(keyCode ==RIGHT ? 2 : ( keyCode ==LEFT ? 3 : -1 ))); 
+  if(newdir != -1 && (x.size() <=1  || (x.get(1) == x.get(0) +dx[newdir] && y.get(1) == y.get(0) +dy[newdir] )));
+    direction = newdir;
+  }
+}

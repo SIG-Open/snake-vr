@@ -1,54 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-  <script src="src/processing.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1404.34">
+  <style type="text/css">
+    p.p3 {margin: 0.0px 0.0px 12.0px 0.0px; line-height: 14.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 12.0px 0.0px; line-height: 14.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; min-height: 14.0px}
+    span.s1 {font-kerning: none}
+  </style>
 </head>
-<body><h1>Processing.js</h1>
-<h2>Simple processing.js via JavaScript</h2>
-<p>Clock</p>
-
-<p><canvas id="canvas1" width="200" height="200"></canvas></p>
-
-<script id="script1" type="text/javascript">
-
-// Simple way to attach js code to the canvas is by using a function
-function sketchProc(processing) {
-  // Override draw function, by default it will be called 60 times per second
-  processing.draw = function() {
-    // determine center and max clock arm length
-    var centerX = processing.width / 2, centerY = processing.height / 2;
-    var maxArmLength = Math.min(centerX, centerY);
-
-    function drawArm(position, lengthScale, weight) {      
-      processing.strokeWeight(weight);
-      processing.line(centerX, centerY, 
-        centerX + Math.sin(position * 2 * Math.PI) * lengthScale * maxArmLength,
-        centerY - Math.cos(position * 2 * Math.PI) * lengthScale * maxArmLength);
-    }
-
-    // erase background
-    processing.background(224);
-
-    var now = new Date();
-
-    // Moving hours arm by small increments
-    var hoursPosition = (now.getHours() % 12 + now.getMinutes() / 60) / 12;
-    drawArm(hoursPosition, 0.5, 5);
-
-    // Moving minutes arm by small increments
-    var minutesPosition = (now.getMinutes() + now.getSeconds() / 60) / 60;
-    drawArm(minutesPosition, 0.80, 3);
-
-    // Moving hour arm by second increments
-    var secondsPosition = now.getSeconds() / 60;
-    drawArm(secondsPosition, 0.90, 1);
-  };
-  
-}
-
-var canvas = document.getElementById("canvas1");
-// attaching the sketchProc function to the canvas
-var p = new Processing(canvas, sketchProc);
-// p.exit(); to detach it
-</script>
+<body>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; line-height: 28.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Processing.js</b></span></h1>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; line-height: 22.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Simple processing.js via JavaScript</b></span></h2>
+<p class="p3"><span class="s1">Clock</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p3"><span class="s1">805-</span></p>
 </body>
 </html>

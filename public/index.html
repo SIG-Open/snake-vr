@@ -162,24 +162,58 @@ WebVRConfig = {
    
         
         
-        /******* FUNCTION DECLARATIONS **********/
-        function create2DArray(rows){
-            var arr = [];
-            for (var i =0; i< rows; i++) {
-                arr[i] = [];
-            }
-            return arr;
+    /******* FUNCTION DECLARATIONS **********/
+    function create2DArray(rows){
+        var arr = [];
+        for (var i =0; i< rows; i++) {
+            arr[i] = [];
         }
+        return arr;
+    }
         
-        function changeCubeColor (cube, newColor){
-            var cubeGeometry = cube.geometry;
-            for ( var i = 0; i < cubeGeometry.faces.length; i += 2 ) {
+    function create10X10Grid(){
+        var grid = create2DArray(10);
+        for (var i = 0; i < 10; i++){
+           for (var j = 0; j < 10; j++){
+               grid[i][j] = new createCube(0.09,0.1, 0.1, (i*FACTOR)-0.5, -0.5 + (j/9), -1);
+               console.log("i: " + i +"j: "+ j);
+               scene.add(grid[i][j]);
+               
+           }
+       }
+    }
+        
+    function getRandomHexColor(){
+        var hex = Math.random() * 0xffffff;
+        return hex;
+    }  
+        
+    function getRandomGreyscaleColor(){
+         var value = Math.random() * 0xFF | 0;
+         var grayscale = (value << 16) | (value << 8) | value;
+         var hex = '0x' + grayscale.toString(16);
+             
+         return hex;
+     }
+        
+     function setRandomCubeFaces(cube){
+        var cubeGeometry = cube.geometry;
+        for ( var i = 0; i < cubeGeometry.faces.length; i += 2 ) {
+              randomHexColor = getRandomHexColor();
+		      cubeGeometry.faces[ i ].color.setHex( randomHexColor);
+		      cubeGeometry.faces[ i + 1 ].color.setHex( randomHexColor);
 
-		          cubeGeometry.faces[ i ].color.setHex( newColor );
-		          cubeGeometry.faces[ i + 1 ].color.setHex( newColor );
+        } 
+     }
+        
+     function changeCubeColor (cube, newColor){
+         var cubeGeometry = cube.geometry;
+         for ( var i = 0; i < cubeGeometry.faces.length; i += 2 ) {
 
-	         } 
-        }
+             cubeGeometry.faces[ i ].color.setHex( newColor);
+             cubeGeometry.faces[ i + 1 ].color.setHex( newColor);
+         } 
+    }
         //Creates cube with random color
         function createCube(width, height, length, x, y, z){
             var geometry0 = new THREE.BoxGeometry(width, height, length);
@@ -205,49 +239,25 @@ WebVRConfig = {
     
             return cube0;
         }
-        
-        //
-//        var moveForward()
-//        var moveBack()
- //       var eat()
-//        var grow()
-        
-//        moveForward()
-//        if (snake.eat() == true){
-//               snake.grow();
-//        }
-        
-        
-    var grid = create2DArray(10);
 
-       console.log(1);
-	   var test_string = 'test string'; 
-	   exampleFunction(test_string); 
-       
 
-       //2D array with 10 rows
-//       for (var i = 0; i < 10; i++){
-//           for (var j = 0; j < 10; j++){
-//               grid[i][j] = new createCube(0.09,0.1, 0.1, (i*FACTOR)-0.5, -0.5 + (j/9), -1);
-//               console.log("i: " + i +"j: "+ j);
-//               scene.add(grid[i][j]);
-               
-//           }
-//       }
-
-//      console.log(grid[0][0].geometry.faces);
-//      changeCubeColor(grid[0][0], 0x00FF00);
-//      console.log("cube green");
-//      changeCubeColor(grid[0][1], 0x00FF00);
+      var snakeArr = [];
+      var snake1 = new createCube(0.1, 0.1,0.1, 0, 0, -2);
+      snakeArr.push(snake1);
+//      changeCubeColor(snake1, 0x00FF00);
+      setRandomCubeFaces(snake1);
+      scene.add(snake1);
+      
       
        /*first graph: front of the viewer*/
-        var graphHeight1 = [ 1,6,1,6,9,2,5,7,8,3,9];
-        var graph1 = new createCube(0.05, 0.1,0.1, 0, 0, -2);
+//        var graphHeight1 = [ 1,6,1,6,9,2,5,7,8,3,9];
+//        var graph1 = new createCube(0.05, 0.1,0.1, 0, 0, -2);
+        //      changeCubeColor(grid[0][0], 0x00FF00);
 
-        for (var i = 0; i < graphHeight1.length; i++){
-            graph1[i] = new createCube(0.05, graphHeight1[i]*FACTOR, 0.05, (i*FACTOR)-0.5, -0.5, -1.25); 
-            scene.add(graph1[i]);
-        }
+//        for (var i = 0; i < graphHeight1.length; i++){
+//            graph1[i] = new createCube(0.05, graphHeight1[i]*FACTOR, 0.05, (i*FACTOR)-0.5, -0.5, -1.25); 
+//            scene.add(graph1[i]);
+//        }
 
         /*second graph: to the left of viewer*/
         var graphHeight2 = [ 10,1,7,8,5,6,5,5,7,8,10];
@@ -287,6 +297,7 @@ WebVRConfig = {
         // Request animation frame loop function
         var lastRender = 0;
         var lastIndex = 0;
+        var deltax = -.002;
         function animate(timestamp) {
             if (timestamp){
                 console.log("timestamp: " + timestamp);
@@ -300,25 +311,37 @@ WebVRConfig = {
  //           console.log("delta" +delta);
  //           console.log("second" + second);
            console.log(second);
-            for (var i = 0; i < 10; i++){
-  //              console.log("GREATER THAN 5");
-  //              changeCubeColor(grid[0][i], 0xFF0000);
-  //              scene.add(grid[0][i]);
-            }
-            
-             var i;
-             if (second > 0){
-                 //changeCubeColor(grid[0][0], 0x00FF00);
-             }
-             if (second > 10){
-                 //changeCubeColor(grid[1][0], 0x00FF00);
-             }
-//             console.log("cube green");
+           
+           
+             
+//            if (graph1[0].position.x <= -1.670){ //if the x position veers off
+//                console.log("greater than or equal to");
+//                for(i = 0; i < graphHeight1.length; i++){
+//                    graph1[i].position.x = (i*FACTOR)-0.5; //reset to original x position
+//                }
+//            }
 
-           for (var i = 0; i< graphHeight1.length; i++){
+              //TODO: next snake unit is not showing up
+              if (snake1.position.x <= -.500){
+                 deltax = .002;
+              } else if (snake1.position.x > .500){
+                  deltax = -.002;
+                  var newSnake = new createCube(0.01, .01, 0.01, snakeArr[0].position.x + .01, 0,-2);
+                  snakeArr.push(newSnake);
+                  scene.add(newSnake);
+                  
+              }
+              console.log("snake array count" + snakeArr.length);
+//              snake1.position.x += deltax;
+//              snake1.rotation.y += delta * 0.0006;
+
+           for (var i = 0; i< snakeArr.length; i++){
+               snakeArr[i].position.x += deltax;
+               snakeArr[i].rotation.y += delta * 0.0006;
                 // Apply rotation to cube mesh
-                graph1[i].rotation.y += delta * 0.0006;
-                graph1[i].position.x -= .002;
+//                graph1[i].rotation.y += delta * 0.0006;
+//                graph1[i].position.x -= .002;
+//                console.log('position x ' + graph1[0].position.x);
             }
         
             for (var i = 0; i< 11; i++){

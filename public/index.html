@@ -226,14 +226,15 @@ WebVRConfig = {
        
 
        //2D array with 10 rows
-       for (var i = 0; i < 10; i++){
-           for (var j = 0; j < 10; j++){
-               grid[i][j] = new createCube(0.09,0.1, 0.1, (i*FACTOR)-0.5, -0.5 + (j/9), -1);
-               console.log("i: " + i +"j: "+ j);
-               scene.add(grid[i][j]);
+//       for (var i = 0; i < 10; i++){
+//           for (var j = 0; j < 10; j++){
+//               grid[i][j] = new createCube(0.09,0.1, 0.1, (i*FACTOR)-0.5, -0.5 + (j/9), -1);
+//               console.log("i: " + i +"j: "+ j);
+//               scene.add(grid[i][j]);
                
-           }
-       }
+//           }
+//       }
+
 //      console.log(grid[0][0].geometry.faces);
 //      changeCubeColor(grid[0][0], 0x00FF00);
 //      console.log("cube green");
@@ -285,6 +286,7 @@ WebVRConfig = {
     //beginning of animate loop
         // Request animation frame loop function
         var lastRender = 0;
+        var lastIndex = 0;
         function animate(timestamp) {
             if (timestamp){
                 console.log("timestamp: " + timestamp);
@@ -297,23 +299,27 @@ WebVRConfig = {
             var second = Math.floor(lastRender/500);
  //           console.log("delta" +delta);
  //           console.log("second" + second);
- //           console.log(second);
+           console.log(second);
             for (var i = 0; i < 10; i++){
   //              console.log("GREATER THAN 5");
   //              changeCubeColor(grid[0][i], 0xFF0000);
   //              scene.add(grid[0][i]);
             }
             
-            var i;
-            
-             changeCubeColor(grid[0][0], 0x00FF00);
+             var i;
+             if (second > 0){
+                 //changeCubeColor(grid[0][0], 0x00FF00);
+             }
+             if (second > 10){
+                 //changeCubeColor(grid[1][0], 0x00FF00);
+             }
 //             console.log("cube green");
 
-//            for (var i = 0; i< graphHeight1.length; i++){
+           for (var i = 0; i< graphHeight1.length; i++){
                 // Apply rotation to cube mesh
-//                graph1[i].rotation.y += delta * 0.0006;
-//                graph1[i].position.x -= .002;
-//            }
+                graph1[i].rotation.y += delta * 0.0006;
+                graph1[i].position.x -= .002;
+            }
         
             for (var i = 0; i< 11; i++){
                  // Apply rotation to cube mesh
@@ -334,7 +340,10 @@ WebVRConfig = {
             manager.render(scene, camera, timestamp);
 
             requestAnimationFrame(animate);
-       }//end of animation function
+            
+            
+            
+             } //end of animation function
 
        // Kick off animation loop
        animate(performance ? performance.now() : Date.now());    
